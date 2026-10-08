@@ -2,7 +2,7 @@
 
 A modification of **Sonic the Hedgehog 32X** (drx's 2008 port of Sonic 1 to the Sega 32X, "Plus"
 version with andlabs' / IWasAPerson's PWM fix). It adds **Tails** (from Sonic 2) drawn by the 32X,
-**32X colour skies** in the zone.
+**32X color skies** in the zone.
 
 ---
 
@@ -24,7 +24,7 @@ version with andlabs' / IWasAPerson's PWM fix). It adds **Tails** (from Sonic 2)
 - **Not a Sega CD game** (it does not boot from a disc). Without a Sega CD it works exactly the same,
   only the CD player is absent.
 - **Not a full 32X remake.** The Genesis still draws Sonic 1's levels; the 32X adds a layer *behind*
-  them (skies) and draws Tails. The level graphics are not redrawn in 256 colours.
+  them (skies) and draws Tails. The level graphics are not redrawn in 256 colors.
 
 ---
 
@@ -61,7 +61,7 @@ The X, Y, Z and Mode buttons need a **6-button pad** (in Fusion / ares: set the 
 ## How the 32X is used
 
 The Genesis (68000 + VDP) still runs and draws Sonic 1. The 32X adds a **second picture layer**
-(320 x 224, 256 colours from 32,768) mixed with the Genesis picture, and two SH2 processors:
+(320 x 224, 256 colors from 32,768) mixed with the Genesis picture, and two SH2 processors:
 
 | Part | Job |
 |---|---|
@@ -71,20 +71,20 @@ The Genesis (68000 + VDP) still runs and draws Sonic 1. The 32X adds a **second 
 
 **The 32X enhancements:**
 
-- **Tails in 32X colours.** His 139 animation frames (from Sonic 2) are pre-drawn into 8-bit pictures
-  with his own 15-colour 32X palette (`tools/tails_frames.py`) – he needs no Genesis palette line, no
+- **Tails in 32X colors.** His 139 animation frames (from Sonic 2) are pre-drawn into 8-bit pictures
+  with his own 15-color 32X palette (`tools/tails_frames.py`) – he needs no Genesis palette line, no
   Genesis sprites and no VRAM, so Sonic 1's graphics are untouched.
-- **Skies in 15-bit colour.** In Green Hill the sky and the water become 64-shade gradients (the sky
+- **Skies in 15-bit color.** In Green Hill the sky and the water become 64-shade gradients (the sky
   of Sonic 1's background is made see-through at the level start, `tails/tails.asm GHZ_SkyPatch`;
   the water already was). In Marble, Star Light, Spring Yard and Scrap Brain the sky is Sonic 1's
-  backdrop colour, replaced by a gradient matching each zone (deep blue to lilac, night to violet,
+  backdrop color, replaced by a gradient matching each zone (deep blue to lilac, night to violet,
   purple to orange twilight, smog brown to amber). The 32X layer sits **behind** the Genesis picture
-  there; Tails' colours carry the 32X "through" bit, so he stays in front. The skies go black while
+  there; Tails' colors carry the 32X "through" bit, so he stays in front. The skies go black while
   Sonic 1 fades its palette. Labyrinth has no sky (its background is solid walls).
 - **The credits plasma** – 19 patterns: OpenJazz's own plasma first (its formula, sine table,
-  speed and colours, redrawn every frame), then 18 colour-cycling patterns with complementary or
-  multi-colour palettes, each drawn once and animated by turning the 32X palette.
-- **Hardware features used:** 256-colour packed-pixel mode, double frame buffers, the **overwrite
+  speed and colors, redrawn every frame), then 18 color-cycling patterns with complementary or
+  multi-color palettes, each drawn once and animated by turning the 32X palette.
+- **Hardware features used:** 256-color packed-pixel mode, double frame buffers, the **overwrite
   window** (bytes of 0 are not written – Tails' empty pixels stay see-through), **Auto Fill** (the 32X
   VDP fills lines itself – the SH2 bus stays free for the slave's sound), the priority and through
   bits (32X behind or in front of the Genesis), per-frame palette changes in vertical blank.
@@ -93,7 +93,7 @@ The Genesis (68000 + VDP) still runs and draws Sonic 1. The 32X adds a **second 
 
 | Register | In a level | In the credits |
 |---|---|---|
-| COMM0 | bit 15 toggles each frame, bit 14 fading, bits 0-2 zone (Labyrinth: the backdrop colour) | frame counter, "alive" |
+| COMM0 | bit 15 toggles each frame, bit 14 fading, bits 0-2 zone (Labyrinth: the backdrop color) | frame counter, "alive" |
 | COMM2 | camera y / 2, Tails' flips, on screen, sky on, bit 8 of x / y | the pattern number |
 | COMM4 | Tails' frame, his tails' frame | "SV" |
 | COMM6 | Tails' screen x + 64, y + 64 | "ER" |
@@ -110,7 +110,7 @@ marked **`[YATSSD]`** in `SH2C/sonic32_master.c`.
 
 - **Copied unchanged** (line endings only): `32x.h`, `types.h`, `fixed.h`, `hw_32x.c/.h`,
   `draw.c/.h`, `draw_inc.h`, `dsprite.c`, `font.c`, `sh2_fixed.s`.
-- **Used for:** the 32X set-up (`Hw32xInit`: 256-colour mode, line tables, buffers), the register
+- **Used for:** the 32X set-up (`Hw32xInit`: 256-color mode, line tables, buffers), the register
   names, and **drawing every Tails frame** (`draw_sprite` with `DRAWSPR_PRECISE | DRAWSPR_OVERWRITE`
   and the flip flags: clipping, flipping, the pixel loops); its 8x8 font for the version text.
 - **Provided by us** in place of his `main.c` / `dtiles.c`: a few globals and `draw_dirtyrect()`
@@ -184,7 +184,7 @@ demo flag, and the demos turned into normal games).
 
 - Player-2 Tails: no walls, no monitors, no damage.
 - Tails is drawn in front of foreground scenery (loops, tunnels).
-- In Labyrinth, Tails' colours do not change underwater; no 32X sky there.
+- In Labyrinth, Tails' colors do not change underwater; no 32X sky there.
 - At power-on there can be a short pop in the sound and a brief flash (Vic's 32X set-up clearing
   the frame buffers while the slave SH2 plays the SEGA voice) – left as it is.
 - CD audio has been built from the working YATSSD / D32XR method but not yet confirmed playing.
