@@ -1,20 +1,19 @@
-# Sonic the Hedgehog 32X – with Tails, 32X colours and a CD audio credits screen
+# Sonic the Hedgehog 32X – with Tails, 32X colors
 
 A modification of **Sonic the Hedgehog 32X** (drx's 2008 port of Sonic 1 to the Sega 32X, "Plus"
 version with andlabs' / IWasAPerson's PWM fix). It adds **Tails** (from Sonic 2) drawn by the 32X,
-**32X colour skies** in the zones, a **menu**, a **credits screen** with plasma effects, and
-**CD audio** playback through an attached Sega CD.
+**32X colour skies** in the zone.
 
 ---
 
 ## What it is
 
-- A **32X cartridge game** (`Sonic32.32x`). It runs on a Genesis / Mega Drive with a 32X, and in
+- A **32X cartridge game** (`Sonic32X+1.32x`). It runs on a Genesis / Mega Drive with a 32X, and in
   emulators with 32X support (tested in **Fusion 3.64** and **ares**).
 - Sonic 1, unchanged in its levels, physics, bosses and special stages – the 68000 runs Sonic 1 as
   before. Everything new is **added around it**: Tails, the 32X picture layer, the menu, the credits.
-- Optionally a **32XCD** game: with a **Sega CD** attached underneath (Sonic32 in the cartridge slot
-  on top) and an **audio CD** in the drive, the credits screen plays the CD's tracks ("Mode 1").
+- Optionally a **32XCD** game: with a **Sega CD** attached underneath and an **audio CD** in the drive, 
+  the hidden credits screen plays the CD's tracks ("Mode 1").
 
 ## What it is not
 
