@@ -36,7 +36,7 @@ version with andlabs' / IWasAPerson's PWM fix). It adds **Tails** (from Sonic 2)
 | Menu | Up / Down, Start | Choose a zone / act / special stage / sound select / **CREDITS** |
 | Menu | **X** | Back to the title screen |
 | Level | Start | Pause (as Sonic 1; Mode + Z works while paused too) |
-| Level | **Mode** (6-button pad 1) | **Call Tails** – he flies in from above the screen |
+| Level | **Mode** (6-button pad 1) | **Call Tails** – the flies in from above the screen |
 | Level | **pad 2**, any button | **Player 2 takes Tails** (see below) |
 
 The X, Y, Z and Mode buttons need a **6-button pad** (in Fusion / ares: set the pad type to 6 buttons).
