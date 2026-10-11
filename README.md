@@ -187,7 +187,7 @@ demo flag, and the demos turned into normal games).
 - In Labyrinth, Tails' colors do not change underwater; no 32X sky there.
 - At power-on there can be a short pop in the sound and a brief flash (Vic's 32X set-up clearing
   the frame buffers while the slave SH2 plays the SEGA voice) – left as it is.
-- CD audio has been built from the working YATSSD / D32XR method but not yet confirmed playing.
+- CD audio has been built from the working YATSSD / D32XR method.
 
 ---
 
