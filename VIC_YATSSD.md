@@ -15,7 +15,7 @@ The only change: Windows line endings (CR LF) turned into LF. Checked against ya
 |---|---|---|
 | `32x.h` | 32X register names (`MARS_SYS_COMM0`, `MARS_VDP_FBCTL`, `MARS_CRAM`, `MARS_FRAMEBUFFER` ...) | everywhere in `sonic32_master.c` |
 | `types.h`, `fixed.h` | types (`tilemap_t`, `rect_t`, `drawsprcmd_t`), the `DRAWSPR_*` flags, fixed-point helpers | through `draw.h` |
-| `hw_32x.c`, `hw_32x.h` | 32X set-up: `Hw32xInit()` (display mode, line tables, clears both frame buffers), `canvas_width/height/pitch` (320 x 224, pitch 384) | `Hw32xInit()` once at start; `canvas_*` for addressing the frame buffer |
+| `hw_32x.c`, `hw_32x.h` | 32X set-up: `Hw32xInit()`, `Hw32xUpdateLineTable()`, `canvas_width/height/pitch` (320 x 224, pitch 384) | `Hw32xInit()` once at start (R1i: after the palette is made see-through, so the power-on palette never shows); `canvas_*` for addressing the frame buffer |
 | `draw.c`, `draw.h`, `draw_inc.h` | `draw_setScissor()`, `draw_clip()`, and the pixel loops that copy an 8-bit sprite into the frame buffer (normal / x flip / y flip, 8- and 16-bit destination) | `draw_setScissor()` once; the loops through `draw_sprite()` |
 | `dsprite.c` | `draw_sprite()`: clips a sprite, picks the right pixel loop, calls `draw_dirtyrect()` | every Tails / tails frame |
 | `font.c` | `msx[]`: an 8x8 font | the bitmaps only, for the version text |
@@ -36,12 +36,12 @@ YATSSD's `main.c` / `dtiles.c` define a few things the copied files need; we def
 
 ## 3. The calls, in order (`sonic32_master.c`, search for `[YATSSD]`)
 
-1. `master_main()` start: `Hw32xInit(MARS_VDP_MODE_256 | MARS_VDP_PRIO_32X, 0)` - 256-colour mode,
-   both frame buffers set up and cleared
+1. `master_main()` start: wait for VDP access, see-through palette, then `Hw32xInit(MARS_VDP_MODE_256 |
+   MARS_VDP_PRIO_32X, 0)` - 256-colour mode, both frame buffers set up and cleared - and the layer off
 2. `draw_setScissor(0, 0, canvas_width, canvas_height)` - clip sprites to the screen
 3. every frame, `draw_frame()` -> `draw_sprite(x, y, w, h, stride, pixels, flags)` for the tails, then
    Tails: `pixels` = one of the 139 frames pre-drawn by `tools/tails_frames.py`, `flags` =
-   `DRAWSPR_PRECISE` (+ `DRAWSPR_HFLIP` / `DRAWSPR_VFLIP` for Tails' facing). `dsprite.c` clips, calls
+   `DRAWSPR_PRECISE | DRAWSPR_OVERWRITE` (+ `DRAWSPR_HFLIP` / `DRAWSPR_VFLIP` for Tails' facing). `DRAWSPR_OVERWRITE` makes `draw.c` write through the 32X overwrite-image window, where 0 bytes are skipped - the empty pixels around Tails stay transparent. `dsprite.c` clips, calls
    the pixel loop from `draw_inc.h`, then our `draw_dirtyrect()`
 4. `version_text()` reads the glyphs from `msx[]` (font.c) and writes only the letter pixels
 
@@ -58,3 +58,10 @@ the version text, and the start-up copied from drx's `SH2_Master.asm`.
 - `draw_stretch_sprite()` (already compiled in, `dsprite.c`): scaled sprites for effects
 - `DRAWSPR_MULTICORE` + the slave SH2: split drawing over both SH2s (the slave is busy with drx's PWM
   sound now; YATSSD's own `sound.c` could replace it)
+
+## 6. A limit of Vic's pixel loops (found in T7)
+
+The loops in `draw_inc.h` count with `do { ... } while (--j > 0)` on an unsigned `j = hw >> 2`. For a
+sprite narrower than 4 units after clipping, `j` starts at 0 and the loop runs about 4 billion times,
+writing over memory. YATSSD's own game never draws such slivers; Sonic32's `draw_frame()` now skips a
+frame unless at least 8 x 2 of its pixels are on the screen.

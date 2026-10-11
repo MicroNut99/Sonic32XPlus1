@@ -48,7 +48,7 @@ The X, Y, Z and Mode buttons need a **6-button pad** (in Fusion / ares: set the 
 - **Helping:** when he is rolled up (he rolls when Sonic jumps) or flying, he **destroys badniks**
   he touches (explosion, animal, points and chain bonus as for Sonic; bosses are left to Sonic), and
   he **collects rings** he touches.
-- **Lost:** more than 256 pixels from Tails, or out of the level, for 1.5 seconds – he **flies back**
+- **Lost:** more than 256 pixels from Sonic, or out of the level, for 1.5 seconds – he **flies back**
   in from above the screen and catches up with Sonic, even at full speed (after 4 seconds he is
   simply there). **Mode** calls him the same way at any time.
 - **Player 2:** any button on pad 2 hands Tails over. Left / Right walk and run, A / B / C jump; A / B /
@@ -187,7 +187,7 @@ demo flag, and the demos turned into normal games).
 - In Labyrinth, Tails' colors do not change underwater; no 32X sky there.
 - At power-on there can be a short pop in the sound and a brief flash (Vic's 32X set-up clearing
   the frame buffers while the slave SH2 plays the SEGA voice) – left as it is.
-- CD audio has been built from the working YATSSD / D32XR method.
+- CD audio has been built from the working YATSSD / D32XR method but not yet confirmed playing.
 
 ---
 
